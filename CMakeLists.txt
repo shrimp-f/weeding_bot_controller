@@ -198,3 +198,6 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(onoff_controller src/onoff_controller.cpp)
+target_link_libraries(onoff_controller ${catkin_LIBRARIES}  )
