@@ -201,3 +201,6 @@ include_directories(
 
 add_executable(onoff_controller src/onoff_controller.cpp)
 target_link_libraries(onoff_controller ${catkin_LIBRARIES}  )
+
+add_executable(onoff_controller_for_gazebo src/onoff_controller_for_gazebo.cpp)
+target_link_libraries(onoff_controller_for_gazebo ${catkin_LIBRARIES}  )
