@@ -5,6 +5,8 @@
 #define image_height 480
 #define	image_width 640
 
+//#define PUBLISH_TOPIC "/cabbage1/cmd_vel"
+#define PUBLISH_TOPIC "/my_robo_two/diff_drive_controller/cmd_vel"
 
 class cabbageController{
 public:
@@ -25,7 +27,7 @@ private:
 
 
 cabbageController::cabbageController(){
-    twist_pub = nh.advertise<geometry_msgs::Twist>("/cabbage1/cmd_vel", 100);
+    twist_pub = nh.advertise<geometry_msgs::Twist>(PUBLISH_TOPIC, 100);
 //    twist_pub = nh.advertise<geometry_msgs::Twist>("/my_robo_two/diff_drive_controller/cmd_vel", 100);
     center_sub = nh.subscribe<std_msgs::Float32>("/cabbage/center", 1, &cabbageController::centerCallback, this);
 //    timer = nh.createTimer(ros::Duration(0.1), &cabbageController::timerCallback, this);
