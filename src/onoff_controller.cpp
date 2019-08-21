@@ -5,8 +5,8 @@
 #define image_height 480
 #define	image_width 640
 
-//#define PUBLISH_TOPIC "/cabbage1/cmd_vel"
-#define PUBLISH_TOPIC "/my_robo_two/diff_drive_controller/cmd_vel"
+#define PUBLISH_TOPIC "/cabbage1/cmd_vel"
+//#define PUBLISH_TOPIC "/my_robo_two/diff_drive_controller/cmd_vel"
 
 class cabbageController{
 public:

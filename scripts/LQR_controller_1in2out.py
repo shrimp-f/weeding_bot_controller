@@ -11,24 +11,25 @@ import math
 
 
 # ロボットの前進速度
-CONST_X_LINEAR = 0.5
+CONST_X_LINEAR = 0.2
 
 # publishするトピック
-PUBLISH_TOPIC = '/my_robo_two/diff_drive_controller/cmd_vel'
-#PUBLISH_TOPIC = '/cabbage1/cmd_vel'
+#PUBLISH_TOPIC = '/my_robo_two/diff_drive_controller/cmd_vel'
+PUBLISH_TOPIC = '/cabbage1/cmd_vel'
 
 
 # delta_t 実行時間間隔dt rostopic hz /estimator_linear/center_distance から
 # delta_t = 1. / 21
-
+B_para = 0.05
 
 #### LQR 関係 #################
 # x[k+1] = Ax[k] + Bu[k]
 A = np.matrix([[1.0, 0], 
                 [0, 1.0]])
-B = np.matrix([[0.0, 0.01],
+B = np.matrix([[0.0, B_para],
                 [0.0, -1.0]])
 C = np.matrix([1.0, 0.0])
+
 
 #    Q = np.eye(2)
 Q = np.matrix([[1.0, 0], 
@@ -68,7 +69,7 @@ def lqr_control(x):
     global Kopt
 #    B = np.matrix([[x[1,0]*delta_t + 1.0, 0.0],
 #                    [0.0, -1.0]])
-    B = np.matrix([[0.0, 0.01],
+    B = np.matrix([[0.0, B_para],
                     [0.0, -1.0]])
 
 #    Kopt, X, ev = dlqr(A, B, C.T * np.eye(2) * C, np.eye(2))
@@ -105,7 +106,7 @@ def callback_angle(msg):
     
     # 速度をセット
     move_cmd.linear.x = u[0,0]*10 + CONST_X_LINEAR
-    move_cmd.angular.z = u[1,0] * 10 
+    move_cmd.angular.z = 1.* u[1,0]
 #    rospy.loginfo("u0: %f", u[0,0])
 
 
