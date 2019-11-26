@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+20191126
+after modelization
+
+"""
+
 import rospy
 import rosparam
 from std_msgs.msg import String
@@ -24,10 +30,10 @@ B_para = 0.05
 
 #### LQR 関係 #################
 # x[k+1] = Ax[k] + Bu[k]
-A = np.matrix([[1.0, 0], 
+A = np.matrix([[1.0, 0.0084], 
                 [0, 1.0]])
-B = np.matrix([[0.0, B_para],
-                [0.0, -1.0]])
+B = np.matrix([[0.0, -0.0160],
+                [0.0, 0.0421]])
 C = np.matrix([1.0, 0.0])
 
 
@@ -35,8 +41,8 @@ C = np.matrix([1.0, 0.0])
 Q = np.matrix([[1.0, 0], 
                 [0, 1.0]])
 #    R = 5*np.eye(2)
-R = np.matrix([[5.0, 0], 
-                [0, 5.0]])
+R = np.matrix([[1.0, 0], 
+                [0, 1.0]])
 
 Kopt = None
 #### LQR 関係 おわり#################
@@ -69,8 +75,6 @@ def lqr_control(x):
     global Kopt
 #    B = np.matrix([[x[1,0]*delta_t + 1.0, 0.0],
 #                    [0.0, -1.0]])
-    B = np.matrix([[0.0, B_para],
-                    [0.0, -1.0]])
 
 #    Kopt, X, ev = dlqr(A, B, C.T * np.eye(2) * C, np.eye(2))
     # Bが固定になったので、Koptを1回だけ計算する
