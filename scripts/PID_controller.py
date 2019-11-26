@@ -21,8 +21,8 @@ target_y = 0.0
 CONST_X_LINEAR = 0.2
 
 # publishするトピック
-PUBLISH_TOPIC = '/my_robo_two/diff_drive_controller/cmd_vel'
-#PUBLISH_TOPIC = '/cabbage1/cmd_vel'
+#PUBLISH_TOPIC = '/my_robo_two/diff_drive_controller/cmd_vel'
+PUBLISH_TOPIC = '/cabbage1/cmd_vel'
 
 
 # delta_t 実行時間間隔dt rostopic hz /estimator_linear/center_distance から

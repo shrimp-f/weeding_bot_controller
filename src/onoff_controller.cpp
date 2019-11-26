@@ -29,7 +29,10 @@ private:
 cabbageController::cabbageController(){
     twist_pub = nh.advertise<geometry_msgs::Twist>(PUBLISH_TOPIC, 100);
 //    twist_pub = nh.advertise<geometry_msgs::Twist>("/my_robo_two/diff_drive_controller/cmd_vel", 100);
-    center_sub = nh.subscribe<std_msgs::Float32>("/cabbage/center", 1, &cabbageController::centerCallback, this);
+
+//    center_sub = nh.subscribe<std_msgs::Float32>("/cabbage/center", 1, &cabbageController::centerCallback, this);
+    center_sub = nh.subscribe<std_msgs::Float32>("/estimator_linear/center_distance", 1, &cabbageController::centerCallback, this);
+
 //    timer = nh.createTimer(ros::Duration(0.1), &cabbageController::timerCallback, this);
 }
 
@@ -49,15 +52,18 @@ void cabbageController::centerCallback(const std_msgs::Float32::ConstPtr& msg){
     twist.linear.z = 0.0;
     twist.angular.x = 0.0;
     twist.angular.y = 0.0;
-	if(center_center < image_width * 0.5 - center_width * 0.5){//カメラ中心より左に畝のセンターがあるとき
+	if(center_center < center_width * -0.5){//カメラ中心より左に畝のセンターがあるとき
 	    twist.linear.x = 0.10;
 		twist.angular.z = +0.5;
-	}else if(center_center > image_width * 0.5 + center_width * 0.5){
+        ROS_INFO("x_l:%f z_a:%f", twist.linear.x, twist.angular.z);
+	}else if(center_center > center_width * 0.5){
 	    twist.linear.x = 0.10;
 		twist.angular.z = -0.5;
+        ROS_INFO("x_l:%f z_a:%f", twist.linear.x, twist.angular.z);
 	}else{
 	    twist.linear.x = 0.20;
 		twist.angular.z = 0.0;
+        ROS_INFO("x_l:%f z_a:%f", twist.linear.x, twist.angular.z);
 	}
     twist_pub.publish(twist);
 }
