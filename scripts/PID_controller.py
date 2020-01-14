@@ -10,8 +10,8 @@ import numpy as np
 import math
 
 
-Kp = 2.
-Ki = 0.1
+Kp = 5.
+Ki = 0.01
 Kd = 1
 ratio = 0.001
 
@@ -22,7 +22,7 @@ CONST_X_LINEAR = 0.2
 
 # publishするトピック
 #PUBLISH_TOPIC = '/my_robo_two/diff_drive_controller/cmd_vel'
-PUBLISH_TOPIC = '/cabbage1/cmd_vel'
+PUBLISH_TOPIC = '/cabbage1/cmd_vel_after'
 
 
 # delta_t 実行時間間隔dt rostopic hz /estimator_linear/center_distance から
@@ -38,7 +38,7 @@ def pid_control(y):
     D = (P-pre_P) / delta_t
     pre_P = P
 
-    duty += Kp * P + Ki * I + Kd * D
+    duty = Kp * P + Ki * I + Kd * D
     output = duty * ratio
     rospy.loginfo("output: %f", output)
     return output
